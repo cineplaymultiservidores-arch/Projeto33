@@ -12,29 +12,41 @@
   <div class="header-info">
     <h1>FÁBRICA DE<br>SABORES</h1>
     <p>Promissão-SP • Lanches e Porções</p>
-    <span class="status">● ABERTO - 18h às 23h • Frete R$ 8,00</span>
+    <span class="status">● Verificando horário...</span>
+    <p style="font-size:11px; color:#aaa; margin-top:4px;">☀️ 09h-14h30 • 🌙 19h-00h30 • Frete R$ 8,00</p>
   </div>
 </div>
+
 <div class="menu-cat">
   <div class="cat ativo" onclick="filtrar('todos', this)">Todos</div>
   <div class="cat" onclick="filtrar('lanches', this)">🍔 Lanches</div>
   <div class="cat" onclick="filtrar('porcoes', this)">🍟 Porções</div>
   <div class="cat" onclick="filtrar('bebidas', this)">🥤 Bebidas</div>
-  <div class="cat" onclick="filtrar('acai', this)">🍧 Açaí</div>
+  <div class="cat" onclick="filtrar('acai', this)">☕️ Cafe da Manhã</div>
 </div>
+
 <div id="lista-produtos"></div>
+
 <div class="carrinho-bar" onclick="abrirCarrinho()">
   <span>🛒 Ver meu pedido</span>
   <span id="total-bar">R$ 0,00 • 0 itens</span>
 </div>
+
 <div id="modal-carrinho">
   <div class="modal-box">
     <h2 id="titulo-etapa">1. Seus dados</h2>
     <div id="itens-carrinho"></div>
+    
     <div id="etapa-1">
       <input id="nome" placeholder="Seu nome completo *">
       <input id="telefone" placeholder="Seu WhatsApp com DDD *">
+      <p style="font-size:12px; color:#FFD700; margin-top:14px; font-weight:900;">COMO QUER RECEBER?</p>
+      <div style="display:flex; gap:10px; margin-top:8px;">
+        <button id="btn-entrega" onclick="setTipo('entrega')" class="btn-tipo ativo-tipo">🛵 ENTREGA R$ 8,00</button>
+        <button id="btn-retirada" onclick="setTipo('retirada')" class="btn-tipo">🏃 RETIRADA</button>
+      </div>
     </div>
+
     <div id="etapa-2" style="display:none;">
       <input id="cidade" placeholder="Cidade *" value="Promissão">
       <input id="bairro" placeholder="Bairro * Ex: Centro">
@@ -44,26 +56,22 @@
       </div>
       <input id="complemento" placeholder="Complemento / Ponto de referência">
     </div>
+
     <div id="etapa-3" style="display:none;">
       <select id="pagamento" onchange="mostrarPix()">
         <option value="Pix">Pix - CPF 38258022806</option>
         <option value="Dinheiro">Dinheiro</option>
         <option value="Cartão na entrega">Cartão na entrega</option>
       </select>
-      <div id="area-pix" style="margin-top:12px; background:#000; border:1px dashed #FFD700; padding:12px; border-radius:8px;">
-        <p style="font-size:11px; color:#FFD700; font-weight:900;">CHAVE PIX CPF:</p>
-        <div style="display:flex; gap:8px; margin-top:8px;">
-          <input id="chave-pix" value="38258022806" readonly style="flex:1; margin:0; background:#111;">
-          <button onclick="copiarPix()" style="width:80px; margin:0; background:#FFD700; color:#000; padding:10px; border-radius:8px; font-weight:900; border:none; cursor:pointer;">COPIAR</button>
-        </div>
-        <p style="font-size:10px; color:#888; margin-top:6px;">Titular: Fábrica de Sabores • Pague e envie o comprovante</p>
-      </div>
+      <div id="area-pix" style="margin-top:12px; background:#000; border:1px dashed #FFD700; padding:12px; border-radius:8px;"></div>
       <div class="resumo">
         <div class="linha"><span>Subtotal</span><span id="subtotal-modal">R$ 0,00</span></div>
-        <div class="linha"><span>Frete fixo</span><span>R$ 8,00</span></div>
+        <div class="linha" id="linha-frete"><span>Frete</span><span id="frete-modal">R$ 8,00</span></div>
         <div class="linha total"><span>Total</span><span id="total-modal">R$ 0,00</span></div>
+        <p id="aviso-retirada" style="display:none;">✅ Retirada no balcão - Sem taxa<br>📍 Promissão-SP</p>
       </div>
     </div>
+
     <button id="btn-proxima" class="btn-final" onclick="proximaEtapa()">CONTINUAR</button>
     <button id="btn-voltar-etapa" onclick="voltarEtapa()" class="btn-outline" style="display:none;">VOLTAR</button>
     <button onclick="fecharCarrinho()" class="btn-fechar">Fechar</button>
