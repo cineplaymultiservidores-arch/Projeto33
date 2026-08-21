@@ -1,0 +1,9 @@
+*{margin:0;padding:0;box-sizing:border-box;}body{font-family:sans-serif;background:#0a0a0a;color:#fff;padding:15px;}
+.login-box{max-width:400px;margin:80px auto;background:#151515;padding:25px;border-radius:12px;border:1px solid #FFD700;text-align:center;}
+input,textarea,select{width:100%;padding:12px;margin:6px 0;border-radius:8px;background:#000;border:1px solid #333;color:#fff;}
+button{width:100%;padding:13px;background:#FFD700;color:#000;border:none;border-radius:8px;font-weight:900;cursor:pointer;margin-top:8px;}
+.header{display:flex;justify-content:space-between;align-items:center;max-width:800px;margin:0 auto 20px;} .btn-sair{width:auto;background:#222;color:#fff;padding:8px 15px;}
+.box-novo{max-width:800px;margin:0 auto;background:#151515;padding:15px;border-radius:10px;border:1px solid #FFD700;}
+.acoes{max-width:800px;margin:15px auto;display:flex;gap:10px;} .btn-ver{background:#25D366;color:#fff;flex:1;} .btn-salvar{background:#00aaff;color:#fff;flex:1;}
+.prod-edit{background:#151515;padding:12px;border-radius:10px;margin:10px auto;max-width:800px;border:1px solid #222;display:flex;gap:10px;}
+.prod-edit img{width:60px;height:60px;border-radius:8px;background:#222;object-fit:cover;} .info{flex:1;} .btn-excluir{background:#ff0044;color:#fff;width:50px;}
