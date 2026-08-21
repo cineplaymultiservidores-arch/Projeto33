@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin V3 - Fábrica Conectada</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}body{background:#111;color:#fff}
+#login{height:100vh;display:flex;align-items:center;justify-content:center}
+.login-box{background:#1e1e1e;padding:30px;border-radius:12px;width:90%;max-width:350px;border:2px solid #f5c542;text-align:center}
+.login-box input{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #333;background:#222;color:#fff}
+.login-box button{width:100%;padding:12px;background:#f5c542;color:#000;border:0;border-radius:8px;font-weight:800;cursor:pointer}
+.header{padding:15px;background:#000;display:flex;justify-content:space-between;border-bottom:2px solid #f5c542;position:sticky;top:0;z-index:10}
+.box{background:#1e1e1e;margin:15px;padding:15px;border-radius:12px;border:1px solid #333}
+.box input,.box select{width:100%;padding:10px;margin:5px 0;background:#222;border:1px solid #333;color:#fff;border-radius:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;padding:15px}
+.card{background:#1e1e1e;border:1px solid #333;padding:10px;border-radius:10px}
+.card img{width:100%;height:150px;object-fit:cover;border-radius:8px;background:#222}
+</style>
+</head>
+<body>
+<div id="login"><div class="login-box"><h2 style="color:#f5c542">FÁBRICA DO SABOR</h2><input id="u" value="admin"><input id="p" type="password" value="1234"><button onclick="logar()">ENTRAR</button><p style="font-size:11px;color:#888;margin-top:10px">admin / 1234</p></div></div>
+<div id="painel" style="display:none">
+<div class="header"><h3 style="color:#f5c542">ADMIN CONECTADO AO SITE</h3><button onclick="location.reload()" style="background:#ff4444;color:#fff;border:0;padding:8px 12px;border-radius:6px">Sair</button></div>
+<div class="box"><h4 style="color:#f5c542">📦 IMPORTAR PRODUTOS DO SEU SITE ATUAL</h4><p style="font-size:12px;color:#aaa;margin:8px 0">Seu site tem muitos produtos mas o admin tá vazio porque são arquivos diferentes. Clique abaixo pra puxar tudo:</p><button onclick="importarDoSite()" style="background:#00aaff;color:#fff;padding:12px;border:0;border-radius:8px;width:100%;font-weight:800">🔄 PUXAR PRODUTOS DO SITE OFICIAL</button><p id="status" style="font-size:12px;color:#00ff88;margin-top:8px"></p></div>
+<div class="box"><h4>➕ Novo Produto</h4><select id="cat"><option value="lanches">🍔 Lanches</option><option value="porcoes">🍟 Porções</option><option value="bebidas">🥤 Bebidas</option><option value="acai">🍧 Açaí</option></select><input id="nome" placeholder="Nome"><input id="preco" type="number" placeholder="Preço"><input id="foto" placeholder="Foto (cole link ou escolha arquivo)"><input type="file" id="f" accept="image/*" hidden onchange="upload(this)"><button onclick="document.getElementById('f').click()" style="background:#222;border:1px dashed #f5c542">📁 Escolher da Galeria</button><button onclick="add()" style="background:#f5c542;color:#000">SALVAR</button></div>
+<div class="box"><button onclick="gerarArquivo()" style="background:#00c851;color:#fff">💾 GERAR ARQUIVO NOVO PRO GITHUB</button><p style="font-size:11px;color:#aaa;margin-top:6px">Depois de editar as fotos, clica aqui e vai baixar o script.js novo. Aí é só subir no GitHub.</p></div>
+<div class="grid" id="lista"></div>
+</div>
+<script>
+let produtos = JSON.parse(localStorage.getItem('fabrica_produtos')||'[]');
+function logar(){ if(document.getElementById('u').value=='admin' && document.getElementById('p').value=='1234'){ document.getElementById('login').style.display='none'; document.getElementById('painel').style.display='block'; carregar(); } else alert('admin / 1234'); }
+
+// TENTA PUXAR DO SEU SITE REAL
+async function importarDoSite(){
+ document.getElementById('status').innerText='Importando...';
+ try{
+   // Tenta pegar do seu github
+   const resp = await fetch('https://cineplaymultiservidores-arch.github.io/Projeto33/script.js');
+   const texto = await resp.text();
+   // extrai o array de produtos do texto
+   const match = texto.match(/produtos\s*=\s*(\[[\s\S]*?\]);/);
+   if(match){
+     const arr = eval('('+match[1]+')');
+     produtos = arr;
+     localStorage.setItem('fabrica_produtos', JSON.stringify(produtos));
+     document.getElementById('status').innerText=`✅ ${produtos.length} produtos importados!`;
+     carregar();
+   } else {
+     // fallback: tenta produtos.js
+     const resp2 = await fetch('https://cineplaymultiservidores-arch.github.io/Projeto33/produtos.js');
+     const texto2 = await resp2.text();
+     const arr2 = eval(texto2);
+     produtos = arr2;
+     localStorage.setItem('fabrica_produtos', JSON.stringify(produtos));
+     document.getElementById('status').innerText=`✅ ${produtos.length} produtos importados!`;
+     carregar();
+   }
+ }catch(e){
+   document.getElementById('status').innerText='❌ Não consegui puxar automático. Me manda o arquivo script.js que eu coloco aqui.';
+   console.error(e);
+ }
+}
+
+function upload(inp){
+ let f=inp.files[0]; let r=new FileReader();
+ r.onload=e=>{ document.getElementById('foto').value=e.target.result; };
+ r.readAsDataURL(f);
+}
+function add(){
+ if(!document.getElementById('nome').value) return alert('Nome');
+ produtos.push({nome:document.getElementById('nome').value, preco:document.getElementById('preco').value, foto:document.getElementById('foto').value, categoria:document.getElementById('cat').value, descricao:''});
+ localStorage.setItem('fabrica_produtos', JSON.stringify(produtos));
+ carregar();
+ document.getElementById('nome').value=''; document.getElementById('preco').value=''; document.getElementById('foto').value='';
+}
+function carregar(){
+ document.getElementById('lista').innerHTML=produtos.map((p,i)=>`
+  <div class="card">
+   ${p.foto?`<img src="${p.foto}">`:`<div style="height:150px;background:#222;display:flex;align-items:center;justify-content:center">Sem foto</div>`}
+   <small style="color:#f5c542">${p.categoria||'sem categoria'}</small>
+   <input value="${p.nome||p.name||''}" onchange="produtos[${i}].nome=this.value;salvar()">
+   <input value="${p.preco||''}" onchange="produtos[${i}].preco=this.value;salvar()">
+   <input type="file" id="ff${i}" hidden accept="image/*" onchange="trocarFoto(this,${i})">
+   <div style="display:flex;gap:5px;margin-top:5px"><button onclick="document.getElementById('ff${i}').click()" style="flex:1;background:#f5c542;color:#000;border:0;padding:6px;border-radius:6px">📁 Foto</button><button onclick="del(${i})" style="background:#ff4444;color:#fff;border:0;padding:6px;border-radius:6px">X</button></div>
+  </div>`).join('');
+}
+function trocarFoto(inp,i){
+ let f=inp.files[0]; let r=new FileReader();
+ r.onload=e=>{ produtos[i].foto=e.target.result; salvar(); };
+ r.readAsDataURL(f);
+}
+function del(i){ if(confirm('Excluir?')){ produtos.splice(i,1); salvar(); } }
+function salvar(){ localStorage.setItem('fabrica_produtos', JSON.stringify(produtos)); carregar(); }
+function gerarArquivo(){
+ let conteudo = 'const produtos = ' + JSON.stringify(produtos, null, 2) + ';';
+ let blob = new Blob([conteudo], {type:'text/javascript'});
+ let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='script.js'; a.click();
+ alert('Baixou o script.js novo! Agora vai no seu GitHub e substitui o arquivo antigo por esse.');
+}
+</script>
+</body>
+</html>
