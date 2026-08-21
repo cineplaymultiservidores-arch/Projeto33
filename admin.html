@@ -22,20 +22,28 @@
 <div id="painel" style="display:none;">
   <div class="header">
     <h2>Admin Fábrica</h2>
-    <button onclick="sair()" class="btn-sair">Sair</button>
+    <div style="display:flex;gap:10px">
+      <button onclick="window.open('index.html','_blank')" class="btn-ver">👁️ VER CARDÁPIO</button>
+      <button onclick="sair()" class="btn-sair">Sair</button>
+    </div>
   </div>
 
   <div class="box-novo" style="border-color:#00aaff;">
     <h3>🎨 CAPA E LOGO DA LOJA</h3>
-    <p style="font-size:12px; color:#aaa; margin-bottom:10px;">Cole o link da imagem (Instagram, Google, Imgur)</p>
-    <input id="cfg-logo" placeholder="Link da foto do LOGO (quadrada fica melhor)">
-    <input id="cfg-capa" placeholder="Link da foto da CAPA (foto de fundo)">
-    <input id="cfg-nome" placeholder="Nome da loja Ex: Fábrica de Sabores">
-    <button onclick="salvarConfig()" style="background:#00aaff; color:#fff;">💾 SALVAR CAPA E LOGO</button>
-    <div style="margin-top:12px; display:flex; gap:10px; align-items:center;">
-      <img id="preview-logo" style="width:60px; height:60px; border-radius:50%; background:#222; object-fit:cover; border:2px solid #333;">
-      <div id="preview-capa" style="flex:1; height:60px; border-radius:8px; background:#222; background-size:cover; background-position:center; border:1px solid #333;"></div>
+    <label>LOGO (clique para escolher da galeria)</label>
+    <input type="file" id="file-logo" accept="image/*" hidden onchange="uploadArquivo(this,'cfg-logo','preview-logo')">
+    <div style="display:flex;gap:10px">
+      <input id="cfg-logo" placeholder="Link do LOGO ou clique na foto ao lado">
+      <img id="preview-logo" onclick="document.getElementById('file-logo').click()" style="width:60px;height:60px;border-radius:50%;background:#222;object-fit:cover;border:2px solid #f5c542;cursor:pointer" title="Clique para trocar">
     </div>
+
+    <label style="margin-top:10px;display:block">CAPA</label>
+    <input type="file" id="file-capa" accept="image/*" hidden onchange="uploadArquivo(this,'cfg-capa','preview-capa',true)">
+    <input id="cfg-capa" placeholder="Link da CAPA">
+    <div id="preview-capa" onclick="document.getElementById('file-capa').click()" style="height:70px;border-radius:8px;background:#222;background-size:cover;background-position:center;border:1px dashed #555;cursor:pointer;margin-top:5px;display:flex;align-items:center;justify-content:center;color:#777">Clique para trocar capa</div>
+
+    <input id="cfg-nome" placeholder="Nome da loja Ex: Fábrica de Sabores" style="margin-top:10px">
+    <button onclick="salvarConfig()" style="background:#00aaff;color:#fff;">💾 SALVAR CAPA E LOGO</button>
   </div>
 
   <div class="box-novo">
@@ -49,13 +57,20 @@
     <input id="novo-nome" placeholder="Nome do produto">
     <textarea id="novo-desc" placeholder="Descrição"></textarea>
     <input id="novo-preco" type="number" step="0.01" placeholder="Preço ex: 25.90">
-    <input id="novo-foto" placeholder="Link da foto do produto">
+
+    <label>Foto do produto</label>
+    <div style="display:flex;gap:10px">
+      <input id="novo-foto" placeholder="Cole link ou escolha arquivo ao lado" style="flex:1">
+      <input type="file" id="file-prod" accept="image/*" hidden onchange="uploadArquivo(this,'novo-foto','preview-novo')">
+      <button type="button" onclick="document.getElementById('file-prod').click()" style="width:100px;background:#f5c542;color:#000">📁 GALERIA</button>
+    </div>
+    <img id="preview-novo" style="width:100%;max-height:180px;object-fit:cover;border-radius:8px;margin-top:8px;display:none;background:#222">
+
     <button onclick="adicionar()">SALVAR PRODUTO</button>
   </div>
 
   <div class="acoes">
-    <button onclick="window.open('index.html','_blank')" class="btn-ver">👁️ VER CARDÁPIO</button>
-    <button onclick="salvarTudo()" class="btn-salvar">💾 SALVAR PRODUTOS</button>
+    <button onclick="salvarTudo()" class="btn-salvar">💾 SALVAR TUDO E ATUALIZAR SITE</button>
   </div>
 
   <div id="lista-admin"></div>
