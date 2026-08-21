@@ -1,7 +1,17 @@
-<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fábrica de Sabores</title><link rel="stylesheet" href="style.css?v=6"></head><body>
-<div class="capa" id="capa-loja" style="background-image:url('https://i.postimg.cc/NGTcrvjS/IMG-20260821-WA5818.jpg')"><div class="capa-overlay"></div><img class="logo" id="logo-loja" src="https://i.postimg.cc/kGv0T8G0/file-0000000068f4820eb645ecd4fd8c1390.png"><div class="header-info"><h1>FÁBRICA DE<br>SABORES</h1><p>Promissão-SP</p><span class="status" id="status-loja">● Verificando...</span></div></div>
-<div class="menu-cat"><div class="cat ativo" onclick="filtrar('todos',this)">Todos</div><div class="cat" onclick="filtrar('lanches',this)">🍔 Lanches</div><div class="cat" onclick="filtrar('porcoes',this)">🍟 Porções</div><div class="cat" onclick="filtrar('bebidas',this)">🥤 Bebidas</div></div>
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fábrica de Sabores</title><link rel="stylesheet" href="style.css?v=7"></head><body>
+<div class="capa" id="capa-loja" style="background-image:url('https://i.postimg.cc/NGTcrvjS/IMG-20260821-WA5818.jpg')"><div class="capa-overlay"></div><img class="logo" id="logo-loja" src="https://i.postimg.cc/kGv0T8G0/file-0000000068f4820eb645ecd4fd8c1390.png"><div class="header-info"><h1>FÁBRICA DE<br>SABORES</h1><p>Promissão-SP</p><span class="status" id="status-loja">● ABERTO AGORA</span></div></div>
+<div class="menu-cat" style="overflow-x:auto;white-space:nowrap;">
+<div class="cat ativo" onclick="filtrar('todos',this)">Todos</div>
+<div class="cat" onclick="filtrar('smash',this)">🍔 Smash</div>
+<div class="cat" onclick="filtrar('porcoes',this)">🍟 Porções</div>
+<div class="cat" onclick="filtrar('dogs',this)">🌭 Dogs</div>
+<div class="cat" onclick="filtrar('coxinha',this)">🥟 Coxinha</div>
+<div class="cat" onclick="filtrar('rap10',this)">🌯 Rap10</div>
+<div class="cat" onclick="filtrar('cafe',this)">☕ Café</div>
+<div class="cat" onclick="filtrar('bebidas',this)">🥤 Bebidas</div>
+<div class="cat" onclick="filtrar('adicionais',this)">➕ Adicionais</div>
+</div>
 <div id="lista-produtos"></div>
 <div class="carrinho-bar" onclick="abrirCarrinho()"><span>🛒 Ver pedido</span><span id="total-bar">R$ 0,00 • 0 itens</span></div>
 <div id="modal-carrinho"><div class="modal-box"><h2 id="titulo-etapa">1. Seus dados</h2><div id="itens-carrinho"></div><div id="etapa-1"><input id="nome" placeholder="Seu nome *"><input id="telefone" placeholder="WhatsApp *"><div style="display:flex;gap:10px;margin-top:8px;"><button id="btn-entrega" onclick="setTipo('entrega')" class="btn-tipo ativo-tipo">🛵 ENTREGA</button><button id="btn-retirada" onclick="setTipo('retirada')" class="btn-tipo">🏃 RETIRADA</button></div></div><div id="etapa-2" style="display:none;"><input id="cidade" value="Promissão"><input id="bairro" placeholder="Bairro *"><div style="display:flex;gap:8px;"><input id="rua" placeholder="Rua *" style="flex:2;"><input id="numero" placeholder="Nº *" style="flex:1;"></div><input id="complemento" placeholder="Complemento"></div><div id="etapa-3" style="display:none;"><select id="pagamento" onchange="mostrarPix()"><option value="Pix">Pix - 38258022806</option><option value="Dinheiro">Dinheiro</option><option value="Cartão na entrega">Cartão</option></select><div id="area-pix" style="margin-top:12px;background:#000;border:1px dashed #FFD700;padding:12px;border-radius:8px;"></div><div class="resumo"><div class="linha"><span>Subtotal</span><span id="subtotal-modal">R$ 0,00</span></div><div class="linha"><span>Frete</span><span id="frete-modal">A calcular</span></div><div class="linha total"><span>Total</span><span id="total-modal">R$ 0,00</span></div></div></div><button id="btn-proxima" class="btn-final" onclick="proximaEtapa()">CONTINUAR</button><button id="btn-voltar-etapa" onclick="voltarEtapa()" class="btn-outline" style="display:none;">VOLTAR</button><button onclick="fecharCarrinho()" class="btn-fechar">Fechar</button></div></div>
-<script src="script.js?v=6"></script></body></html>
+<script src="script.js?v=7"></script></body></html>
