@@ -3,79 +3,186 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin - Fábrica de Sabores</title>
-<link rel="stylesheet" href="admin.css">
+<title>Admin - Fábrica do Sabor</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#0e0e0e;color:#fff;min-height:100vh}
+#login{height:100vh;display:flex;align-items:center;justify-content:center;background:#000}
+.login-box{background:#1a1a1a;padding:30px;border-radius:15px;width:90%;max-width:360px;text-align:center;border:2px solid #f5c542}
+.login-box h2{color:#f5c542;margin-bottom:5px}
+.login-box p{color:#aaa;font-size:12px;margin-bottom:15px}
+.login-box input{width:100%;padding:14px;margin:8px 0;border-radius:10px;border:1px solid #333;background:#222;color:#fff;font-size:16px}
+.login-box button{width:100%;padding:14px;background:#f5c542;color:#000;border:0;border-radius:10px;font-weight:900;cursor:pointer;margin-top:10px;font-size:16px}
+#login small{color:#666;font-size:11px;display:block;margin-top:10px}
+.header{background:#000;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #f5c542;position:sticky;top:0;z-index:10}
+.header h2{color:#f5c542}
+.box{background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:18px;margin:15px}
+.box h3{color:#f5c542;margin-bottom:12px}
+.box input,.box select,.box textarea{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #333;background:#222;color:#fff}
+.box button{width:100%;padding:13px;background:#f5c542;color:#000;border:0;border-radius:8px;font-weight:800;cursor:pointer;margin-top:10px}
+.btn-ver{background:#222;color:#fff;border:1px solid #555;padding:8px 15px;border-radius:8px;cursor:pointer}
+.btn-sair{background:#ff4444;color:#fff;border:0;padding:8px 15px;border-radius:8px;cursor:pointer}
+.btn-green{background:#00c851!important;color:#fff!important}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;padding:15px}
+.card{background:#1a1a1a;border:1px solid #333;border-radius:12px;padding:12px}
+.card img{width:100%;height:160px;object-fit:cover;border-radius:8px;background:#222}
+.card input{margin:5px 0;padding:8px;font-size:13px}
+.up{border:2px dashed #f5c542;border-radius:10px;padding:20px;text-align:center;cursor:pointer;margin:6px 0}
+.up:hover{background:#222}
+</style>
 </head>
 <body>
 
 <div id="login">
   <div class="login-box">
-    <h2>FÁBRICA DE SABORES</h2>
-    <p>Admin - Pix 38258022806</p>
-    <input id="user" placeholder="Usuário">
-    <input id="pass" type="password" placeholder="Senha">
-    <button onclick="logar()">ENTRAR</button>
-    <small>Login: admin / Senha: 1234</small>
+    <h2>🍔 FÁBRICA DO SABOR</h2>
+    <p>Pix 38258022806</p>
+    <input id="user" placeholder="Usuário" value="admin">
+    <input id="pass" type="password" placeholder="Senha" value="1234">
+    <button onclick="entrar()">ENTRAR</button>
+    <small>admin / 1234</small>
   </div>
 </div>
 
-<div id="painel" style="display:none;">
+<div id="painel" style="display:none">
   <div class="header">
-    <h2>Admin Fábrica</h2>
-    <div style="display:flex;gap:10px">
-      <button onclick="window.open('index.html','_blank')" class="btn-ver">👁️ VER CARDÁPIO</button>
-      <button onclick="sair()" class="btn-sair">Sair</button>
+    <h2>Admin</h2>
+    <div>
+      <button class="btn-ver" onclick="window.open('index.html','_blank')">👁️ Ver Site</button>
+      <button class="btn-sair" onclick="sair()">Sair</button>
     </div>
   </div>
 
-  <div class="box-novo" style="border-color:#00aaff;">
-    <h3>🎨 CAPA E LOGO DA LOJA</h3>
-    <label>LOGO (clique para escolher da galeria)</label>
-    <input type="file" id="file-logo" accept="image/*" hidden onchange="uploadArquivo(this,'cfg-logo','preview-logo')">
-    <div style="display:flex;gap:10px">
-      <input id="cfg-logo" placeholder="Link do LOGO ou clique na foto ao lado">
-      <img id="preview-logo" onclick="document.getElementById('file-logo').click()" style="width:60px;height:60px;border-radius:50%;background:#222;object-fit:cover;border:2px solid #f5c542;cursor:pointer" title="Clique para trocar">
+  <div class="box" style="border-color:#00aaff">
+    <h3>🎨 LOGO E CAPA</h3>
+    <input id="cfg-nome" placeholder="Nome da loja">
+    <input type="file" id="fLogo" hidden accept="image/*" onchange="up(this,'cfg-logo','prevLogo')">
+    <input type="file" id="fCapa" hidden accept="image/*" onchange="up(this,'cfg-capa','prevCapa',1)">
+    <div style="display:flex;gap:10px;margin-top:8px">
+      <div style="flex:1">
+        <small style="color:#f5c542">LOGO</small>
+        <div class="up" onclick="document.getElementById('fLogo').click()"><span id="txtLogo">Clique para escolher LOGO</span><img id="prevLogo" style="width:80px;height:80px;border-radius:50%;display:none;margin:10px auto;object-fit:cover"></div>
+        <input id="cfg-logo" placeholder="Link ou base64 da logo">
+      </div>
+      <div style="flex:1">
+        <small style="color:#f5c542">CAPA</small>
+        <div class="up" onclick="document.getElementById('fCapa').click()" id="prevCapa" style="height:110px;background-size:cover;background-position:center">Clique para escolher CAPA</div>
+        <input id="cfg-capa" placeholder="Link ou base64 da capa">
+      </div>
     </div>
-
-    <label style="margin-top:10px;display:block">CAPA</label>
-    <input type="file" id="file-capa" accept="image/*" hidden onchange="uploadArquivo(this,'cfg-capa','preview-capa',true)">
-    <input id="cfg-capa" placeholder="Link da CAPA">
-    <div id="preview-capa" onclick="document.getElementById('file-capa').click()" style="height:70px;border-radius:8px;background:#222;background-size:cover;background-position:center;border:1px dashed #555;cursor:pointer;margin-top:5px;display:flex;align-items:center;justify-content:center;color:#777">Clique para trocar capa</div>
-
-    <input id="cfg-nome" placeholder="Nome da loja Ex: Fábrica de Sabores" style="margin-top:10px">
-    <button onclick="salvarConfig()" style="background:#00aaff;color:#fff;">💾 SALVAR CAPA E LOGO</button>
+    <button onclick="salvarCfg()" style="background:#00aaff;color:#fff">💾 SALVAR LOGO E CAPA</button>
   </div>
 
-  <div class="box-novo">
-    <h3>➕ Novo Produto</h3>
-    <select id="novo-cat">
-      <option value="lanches">🍔 Lanches</option>
-      <option value="porcoes">🍟 Porções</option>
-      <option value="bebidas">🥤 Bebidas</option>
-      <option value="acai">🍧 Açaí</option>
-    </select>
-    <input id="novo-nome" placeholder="Nome do produto">
-    <textarea id="novo-desc" placeholder="Descrição"></textarea>
-    <input id="novo-preco" type="number" step="0.01" placeholder="Preço ex: 25.90">
-
-    <label>Foto do produto</label>
-    <div style="display:flex;gap:10px">
-      <input id="novo-foto" placeholder="Cole link ou escolha arquivo ao lado" style="flex:1">
-      <input type="file" id="file-prod" accept="image/*" hidden onchange="uploadArquivo(this,'novo-foto','preview-novo')">
-      <button type="button" onclick="document.getElementById('file-prod').click()" style="width:100px;background:#f5c542;color:#000">📁 GALERIA</button>
-    </div>
-    <img id="preview-novo" style="width:100%;max-height:180px;object-fit:cover;border-radius:8px;margin-top:8px;display:none;background:#222">
-
-    <button onclick="adicionar()">SALVAR PRODUTO</button>
+  <div class="box">
+    <h3>➕ NOVO PRODUTO</h3>
+    <select id="nCat"><option value="lanches">🍔 Lanches</option><option value="porcoes">🍟 Porções</option><option value="bebidas">🥤 Bebidas</option><option value="outros">📦 Outros</option></select>
+    <input id="nNome" placeholder="Nome ex: Smash Burgues">
+    <input id="nPreco" type="number" step="0.01" placeholder="Preço ex: 25.90">
+    <textarea id="nDesc" placeholder="Descrição"></textarea>
+    <input type="file" id="fProd" hidden accept="image/*" onchange="up(this,'nFoto','prevNovo')">
+    <div class="up" onclick="document.getElementById('fProd').click()"><span id="txtFoto">📁 CLIQUE AQUI PARA ESCOLHER FOTO DA GALERIA</span><img id="prevNovo" style="width:100%;max-height:180px;display:none;border-radius:8px;margin-top:10px;object-fit:cover"></div>
+    <input id="nFoto" placeholder="Link da foto (ou vai preencher sozinho quando escolher da galeria)">
+    <button onclick="add()">SALVAR PRODUTO</button>
   </div>
 
-  <div class="acoes">
-    <button onclick="salvarTudo()" class="btn-salvar">💾 SALVAR TUDO E ATUALIZAR SITE</button>
+  <div class="box">
+    <button class="btn-green" onclick="salvarTudo()">💾 SALVAR TUDO E ATUALIZAR CARDÁPIO</button>
   </div>
 
-  <div id="lista-admin"></div>
+  <div class="grid" id="lista"></div>
 </div>
 
-<script src="admin.js"></script>
+<script>
+let prods = JSON.parse(localStorage.getItem('fabrica_produtos')||'[]');
+let cfg = JSON.parse(localStorage.getItem('fabrica_config')||'{"nome":"Fábrica de Sabores","logo":"","capa":""}');
+
+function entrar(){
+ let u=document.getElementById('user').value.trim();
+ let p=document.getElementById('pass').value.trim();
+ if(u==='admin' && p==='1234'){
+  document.getElementById('login').style.display='none';
+  document.getElementById('painel').style.display='block';
+  localStorage.setItem('logado','1');
+  carregar();
+ }else{ alert('Usuário: admin\nSenha: 1234'); }
+}
+function sair(){ localStorage.removeItem('logado'); location.reload(); }
+
+function up(input, idInput, idPrev, isBg){
+ let f=input.files[0]; if(!f) return;
+ if(f.size>4*1024*1024){ alert('Foto muito grande, max 4MB'); return; }
+ let r=new FileReader();
+ r.onload=e=>{
+  let b64=e.target.result;
+  document.getElementById(idInput).value=b64;
+  let prev=document.getElementById(idPrev);
+  if(isBg){
+   prev.style.backgroundImage=`url(${b64})`;
+   prev.innerHTML='';
+  }else{
+   prev.src=b64; prev.style.display='block';
+   let txtId='txt'+idPrev.replace('prev','');
+   let txt=document.getElementById(txtId); if(txt) txt.style.display='none';
+  }
+ };
+ r.readAsDataURL(f);
+}
+
+function salvarCfg(){
+ cfg.nome=document.getElementById('cfg-nome').value;
+ cfg.logo=document.getElementById('cfg-logo').value;
+ cfg.capa=document.getElementById('cfg-capa').value;
+ localStorage.setItem('fabrica_config', JSON.stringify(cfg));
+ alert('Logo e capa salvos!');
+}
+
+function add(){
+ let nome=document.getElementById('nNome').value;
+ let preco=document.getElementById('nPreco').value;
+ if(!nome||!preco){ alert('Nome e preço são obrigatórios'); return; }
+ prods.push({id:Date.now(),nome:nome,preco:preco,desc:document.getElementById('nDesc').value,foto:document.getElementById('nFoto').value,cat:document.getElementById('nCat').value});
+ document.getElementById('nNome').value=''; document.getElementById('nPreco').value=''; document.getElementById('nDesc').value=''; document.getElementById('nFoto').value='';
+ document.getElementById('prevNovo').style.display='none'; document.getElementById('txtFoto').style.display='block';
+ salvarTudo();
+}
+
+function carregar(){
+ document.getElementById('cfg-nome').value=cfg.nome||'';
+ document.getElementById('cfg-logo').value=cfg.logo||'';
+ document.getElementById('cfg-capa').value=cfg.capa||'';
+ if(cfg.logo){ document.getElementById('prevLogo').src=cfg.logo; document.getElementById('prevLogo').style.display='block'; document.getElementById('txtLogo').style.display='none'; }
+ if(cfg.capa){ document.getElementById('prevCapa').style.backgroundImage=`url(${cfg.capa})`; }
+
+ let lista=document.getElementById('lista');
+ if(prods.length===0){ lista.innerHTML='<p style="padding:20px;color:#777;text-align:center">Nenhum produto. Cadastre acima.</p>'; return; }
+ lista.innerHTML=prods.map((p,i)=>`
+  <div class="card">
+   ${p.foto?`<img src="${p.foto}">`:`<div style="height:160px;background:#222;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#555">Sem foto</div>`}
+   <input value="${p.nome}" onchange="prods[${i}].nome=this.value">
+   <input value="${p.preco}" type="number" step="0.01" onchange="prods[${i}].preco=this.value">
+   <input type="file" id="f_${i}" hidden accept="image/*" onchange="upEdit(this,${i})">
+   <div style="display:flex;gap:6px;margin-top:6px"><button onclick="document.getElementById('f_${i}').click()" style="flex:1;background:#f5c542;color:#000;border:0;padding:8px;border-radius:6px;font-weight:700">📁 Trocar Foto</button><button onclick="del(${i})" style="background:#ff4444;color:#fff;border:0;padding:8px;border-radius:6px">X</button></div>
+  </div>`).join('');
+}
+function upEdit(inp,i){
+ let f=inp.files[0]; let r=new FileReader();
+ r.onload=e=>{ prods[i].foto=e.target.result; salvarTudo(); };
+ r.readAsDataURL(f);
+}
+function del(i){ if(confirm('Excluir '+prods[i].nome+'?')){ prods.splice(i,1); salvarTudo(); } }
+function salvarTudo(){
+ localStorage.setItem('fabrica_produtos', JSON.stringify(prods));
+ localStorage.setItem('fabrica_config', JSON.stringify(cfg));
+ carregar();
+}
+
+window.onload=()=>{
+ if(localStorage.getItem('logado')==='1'){
+  document.getElementById('login').style.display='none';
+  document.getElementById('painel').style.display='block';
+  carregar();
+ }
+}
+</script>
 </body>
 </html>
