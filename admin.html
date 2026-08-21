@@ -1,1 +1,66 @@
-<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin - Fábrica</title><link rel="stylesheet" href="admin.css"></head><body><div id="login"><div class="login-box"><h2>FÁBRICA DE SABORES</h2><p>Promissão - Pix 38258022806</p><input id="user" placeholder="Usuário"><input id="pass" type="password" placeholder="Senha"><button onclick="logar()">ENTRAR</button><small>admin / 1234</small></div></div><div id="painel" style="display:none;"><div class="header"><h2>Produtos</h2><button onclick="sair()" class="btn-sair">Sair</button></div><div class="box-novo"><h3>➕ Novo Produto</h3><select id="novo-cat"><option value="lanches">🍔 Lanches</option><option value="porcoes">🍟 Porções</option><option value="bebidas">🥤 Bebidas</option><option value="acai">🍧 Açaí</option></select><input id="novo-nome" placeholder="Nome"><textarea id="novo-desc" placeholder="Descrição"></textarea><input id="novo-preco" type="number" placeholder="Preço"><input id="novo-foto" placeholder="Link da foto"><button onclick="adicionar()">SALVAR PRODUTO</button></div><div class="acoes"><button onclick="window.open('index.html','_blank')" class="btn-ver">👁️ VER CARDÁPIO</button><button onclick="salvarTudo()" class="btn-salvar">💾 SALVAR</button></div><div id="lista-admin"></div></div><script src="admin.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Fábrica de Sabores</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div id="login">
+  <div class="login-box">
+    <h2>FÁBRICA DE SABORES</h2>
+    <p>Admin - Pix 38258022806</p>
+    <input id="user" placeholder="Usuário">
+    <input id="pass" type="password" placeholder="Senha">
+    <button onclick="logar()">ENTRAR</button>
+    <small>Login: admin / Senha: 1234</small>
+  </div>
+</div>
+
+<div id="painel" style="display:none;">
+  <div class="header">
+    <h2>Admin Fábrica</h2>
+    <button onclick="sair()" class="btn-sair">Sair</button>
+  </div>
+
+  <div class="box-novo" style="border-color:#00aaff;">
+    <h3>🎨 CAPA E LOGO DA LOJA</h3>
+    <p style="font-size:12px; color:#aaa; margin-bottom:10px;">Cole o link da imagem (Instagram, Google, Imgur)</p>
+    <input id="cfg-logo" placeholder="Link da foto do LOGO (quadrada fica melhor)">
+    <input id="cfg-capa" placeholder="Link da foto da CAPA (foto de fundo)">
+    <input id="cfg-nome" placeholder="Nome da loja Ex: Fábrica de Sabores">
+    <button onclick="salvarConfig()" style="background:#00aaff; color:#fff;">💾 SALVAR CAPA E LOGO</button>
+    <div style="margin-top:12px; display:flex; gap:10px; align-items:center;">
+      <img id="preview-logo" style="width:60px; height:60px; border-radius:50%; background:#222; object-fit:cover; border:2px solid #333;">
+      <div id="preview-capa" style="flex:1; height:60px; border-radius:8px; background:#222; background-size:cover; background-position:center; border:1px solid #333;"></div>
+    </div>
+  </div>
+
+  <div class="box-novo">
+    <h3>➕ Novo Produto</h3>
+    <select id="novo-cat">
+      <option value="lanches">🍔 Lanches</option>
+      <option value="porcoes">🍟 Porções</option>
+      <option value="bebidas">🥤 Bebidas</option>
+      <option value="acai">🍧 Açaí</option>
+    </select>
+    <input id="novo-nome" placeholder="Nome do produto">
+    <textarea id="novo-desc" placeholder="Descrição"></textarea>
+    <input id="novo-preco" type="number" step="0.01" placeholder="Preço ex: 25.90">
+    <input id="novo-foto" placeholder="Link da foto do produto">
+    <button onclick="adicionar()">SALVAR PRODUTO</button>
+  </div>
+
+  <div class="acoes">
+    <button onclick="window.open('index.html','_blank')" class="btn-ver">👁️ VER CARDÁPIO</button>
+    <button onclick="salvarTudo()" class="btn-salvar">💾 SALVAR PRODUTOS</button>
+  </div>
+
+  <div id="lista-admin"></div>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>
