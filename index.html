@@ -1,22 +1,74 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fábrica de Sabores</title>
-  <link rel="stylesheet" href="style.css?v=3">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fábrica de Sabores - Promissão</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <img id="logo" src="https://i.imgur.com/G7vV1V.webp" alt="Logo">
-    <h1>FÁBRICA DE SABORES</h1>
-    <p>O melhor lanche de Promissão</p>
-  </header>
-  <main id="menu"></main>
-  <footer>
-    <p>📍 Promissão - SP | 📱 WhatsApp (14) 9xxxx-xxxx</p>
-    <p>Horário: 18h às 23h</p>
-  </footer>
-  <script src="script.js?v=3"></script>
+<div class="capa">
+  <img src="https://via.placeholder.com/100/000/FFD700?text=FS" class="logo">
+  <div class="header-info">
+    <h1>FÁBRICA DE<br>SABORES</h1>
+    <p>Promissão-SP • Lanches e Porções</p>
+    <span class="status">● ABERTO - 18h às 23h • Frete R$ 8,00</span>
+  </div>
+</div>
+<div class="menu-cat">
+  <div class="cat ativo" onclick="filtrar('todos', this)">Todos</div>
+  <div class="cat" onclick="filtrar('lanches', this)">🍔 Lanches</div>
+  <div class="cat" onclick="filtrar('porcoes', this)">🍟 Porções</div>
+  <div class="cat" onclick="filtrar('bebidas', this)">🥤 Bebidas</div>
+  <div class="cat" onclick="filtrar('acai', this)">🍧 Açaí</div>
+</div>
+<div id="lista-produtos"></div>
+<div class="carrinho-bar" onclick="abrirCarrinho()">
+  <span>🛒 Ver meu pedido</span>
+  <span id="total-bar">R$ 0,00 • 0 itens</span>
+</div>
+<div id="modal-carrinho">
+  <div class="modal-box">
+    <h2 id="titulo-etapa">1. Seus dados</h2>
+    <div id="itens-carrinho"></div>
+    <div id="etapa-1">
+      <input id="nome" placeholder="Seu nome completo *">
+      <input id="telefone" placeholder="Seu WhatsApp com DDD *">
+    </div>
+    <div id="etapa-2" style="display:none;">
+      <input id="cidade" placeholder="Cidade *" value="Promissão">
+      <input id="bairro" placeholder="Bairro * Ex: Centro">
+      <div style="display:flex; gap:8px;">
+        <input id="rua" placeholder="Rua / Av *" style="flex:2;">
+        <input id="numero" placeholder="Nº *" style="flex:1;">
+      </div>
+      <input id="complemento" placeholder="Complemento / Ponto de referência">
+    </div>
+    <div id="etapa-3" style="display:none;">
+      <select id="pagamento" onchange="mostrarPix()">
+        <option value="Pix">Pix - CPF 38258022806</option>
+        <option value="Dinheiro">Dinheiro</option>
+        <option value="Cartão na entrega">Cartão na entrega</option>
+      </select>
+      <div id="area-pix" style="margin-top:12px; background:#000; border:1px dashed #FFD700; padding:12px; border-radius:8px;">
+        <p style="font-size:11px; color:#FFD700; font-weight:900;">CHAVE PIX CPF:</p>
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <input id="chave-pix" value="38258022806" readonly style="flex:1; margin:0; background:#111;">
+          <button onclick="copiarPix()" style="width:80px; margin:0; background:#FFD700; color:#000; padding:10px; border-radius:8px; font-weight:900; border:none; cursor:pointer;">COPIAR</button>
+        </div>
+        <p style="font-size:10px; color:#888; margin-top:6px;">Titular: Fábrica de Sabores • Pague e envie o comprovante</p>
+      </div>
+      <div class="resumo">
+        <div class="linha"><span>Subtotal</span><span id="subtotal-modal">R$ 0,00</span></div>
+        <div class="linha"><span>Frete fixo</span><span>R$ 8,00</span></div>
+        <div class="linha total"><span>Total</span><span id="total-modal">R$ 0,00</span></div>
+      </div>
+    </div>
+    <button id="btn-proxima" class="btn-final" onclick="proximaEtapa()">CONTINUAR</button>
+    <button id="btn-voltar-etapa" onclick="voltarEtapa()" class="btn-outline" style="display:none;">VOLTAR</button>
+    <button onclick="fecharCarrinho()" class="btn-fechar">Fechar</button>
+  </div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
