@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin 67 - Fábrica do Sabor</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#0e0e0e;color:#fff}
+#login{height:100vh;display:flex;align-items:center;justify-content:center;background:#000}
+.box-login{background:#1a1a1a;padding:30px;border-radius:12px;width:90%;max-width:350px;text-align:center;border:2px solid #f5c542}
+.box-login input{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #333;background:#222;color:#fff}
+.box-login button{width:100%;padding:12px;background:#f5c542;color:#000;border:0;border-radius:8px;font-weight:900;cursor:pointer}
+.header{background:#000;padding:12px 15px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #f5c542;position:sticky;top:0;z-index:10}
+.box{background:#1a1a1a;margin:12px;padding:14px;border-radius:12px;border:1px solid #333}
+.box input,.box select{width:100%;padding:10px;margin:5px 0;background:#222;border:1px solid #333;color:#fff;border-radius:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;padding:12px}
+.card{background:#1e1e1e;border:1px solid #333;padding:10px;border-radius:10px}
+.card img{width:100%;height:140px;object-fit:cover;border-radius:8px;background:#222}
+.btn{width:100%;padding:9px;border:0;border-radius:6px;font-weight:700;cursor:pointer;margin-top:6px}
+</style>
+</head>
+<body>
+
+<div id="login">
+<div class="box-login">
+<h2 style="color:#f5c542">🍔 FÁBRICA</h2>
+<p style="font-size:12px;color:#aaa;margin-bottom:10px">67 PRODUTOS</p>
+<input id="u" placeholder="admin" value="admin">
+<input id="p" type="password" placeholder="1234" value="1234">
+<button onclick="entrar()">ENTRAR</button>
+</div>
+</div>
+
+<div id="painel" style="display:none">
+<div class="header">
+<b style="color:#f5c542">ADMIN <span id="contador">0/67</span></b>
+<div><button onclick="window.open('index.html','_blank')" style="background:#222;color:#fff;border:1px solid #444;padding:7px 10px;border-radius:6px;margin-right:5px">Ver Site</button><button onclick="limpar()" style="background:#ff4444;color:#fff;border:0;padding:7px 10px;border-radius:6px">Limpar</button></div>
+</div>
+
+<div class="box" style="border-color:#00aaff">
+<h4 style="color:#00aaff">PASSO 1 - Puxar seus 67 produtos</h4>
+<button onclick="importar()" style="background:#00aaff;color:#fff;padding:12px;border:0;border-radius:8px;width:100%;font-weight:800;margin-top:8px">🔄 PUXAR 67 PRODUTOS DO SITE</button>
+<p id="status" style="color:#00ff88;font-size:12px;margin-top:6px"></p>
+</div>
+
+<div class="box" style="border-color:#00c851">
+<h4 style="color:#00c851">PASSO 2 - Gerar arquivo final</h4>
+<button onclick="gerar()" class="btn" style="background:#00c851;color:#fff;padding:13px;font-size:15px">💾 GERAR produtos.js COM 67 FOTOS</button>
+</div>
+
+<div id="lista" class="grid"></div>
+</div>
+
+<script>
+let produtos = JSON.parse(localStorage.getItem('fabrica_67')||'[]');
+
+function entrar(){
+if(document.getElementById('u').value==='admin' && document.getElementById('p').value==='1234'){
+document.getElementById('login').style.display='none';
+document.getElementById('painel').style.display='block';
+carregar();
+}else alert('admin / 1234');
+}
+function limpar(){ if(confirm('Limpar tudo?')){ localStorage.removeItem('fabrica_67'); produtos=[]; carregar(); location.reload(); } }
+
+function comprimir(file, cb){
+let r=new FileReader();
+r.onload=e=>{
+let img=new Image(); img.src=e.target.result;
+img.onload=()=>{
+let c=document.createElement('canvas');
+let max=300; let w=img.width,h=img.height;
+if(w>h){ if(w>max){ h*=max/w; w=max; } }else{ if(h>max){ w*=max/h; h=max; } }
+c.width=w; c.height=h;
+c.getContext('2d').drawImage(img,0,0,w,h);
+cb(c.toDataURL('image/jpeg',0.5));
+}
+};
+r.readAsDataURL(file);
+}
+
+async function importar(){
+document.getElementById('status').innerText='Buscando...';
+try{
+let t=await (await fetch('script.js')).text();
+let m=t.match(/produtos\s*=\s*(\[[\s\S]*?\]);/);
+if(m){ produtos=eval('('+m[1]+')'); }
+else{ produtos=eval(t); }
+localStorage.setItem('fabrica_67',JSON.stringify(produtos));
+document.getElementById('status').innerText='✅ '+produtos.length+' produtos carregados!';
+carregar();
+}catch(e){
+document.getElementById('status').innerText='❌ Não achei script.js. Coloque este admin na mesma pasta do script.js e clique de novo.';
+}
+}
+
+function carregar(){
+document.getElementById('contador').innerText=produtos.length+'/67 - '+(produtos.filter(p=>p.foto).length)+' com foto';
+let html=produtos.map((p,i)=>`
+<div class="card">
+${p.foto?`<img src="${p.foto}">`:`<div style="height:140px;background:#222;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#666;font-size:12px">SEM FOTO ${i+1}</div>`}
+<div style="font-size:10px;color:#f5c542;margin:4px 0">${(p.categoria||p.cat||'outros').toUpperCase()} • ${i+1}/67</div>
+<input value="${p.nome||p.name||''}" placeholder="Nome" onchange="produtos[${i}].nome=this.value;salvar()">
+<input value="${p.preco||''}" placeholder="Preço" type="number" step="0.01" onchange="produtos[${i}].preco=this.value;salvar()">
+<input type="file" id="f${i}" hidden accept="image/*" onchange="trocar(this,${i})">
+<button onclick="document.getElementById('f${i}').click()" class="btn" style="background:${p.foto?'#333':'#f5c542'};color:${p.foto?'#fff':'#000'}">${p.foto?'✅ Trocar Foto':'📁 Foto '+(i+1)}</button>
+</div>`).join('');
+document.getElementById('lista').innerHTML=html||'<p style="padding:20px;color:#777;text-align:center">Clique em PUXAR 67 PRODUTOS no topo</p>';
+}
+
+function trocar(inp,i){
+comprimir(inp.files[0], (mini)=>{
+produtos[i].foto=mini;
+salvar();
+});
+}
+function salvar(){ localStorage.setItem('fabrica_67',JSON.stringify(produtos)); carregar(); }
+
+function gerar(){
+if(produtos.length===0) return alert('Primeiro puxe os produtos');
+let comFoto=produtos.filter(p=>p.foto).length;
+if(!confirm(`Gerar arquivo com ${produtos.length} produtos sendo ${comFoto} com foto?`)) return;
+let codigo='const produtos = '+JSON.stringify(produtos,null,2)+';\n';
+let blob=new Blob([codigo],{type:'text/javascript'});
+let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='produtos.js'; a.click();
+alert('Baixou produtos.js com '+comFoto+' fotos! Tamanho: '+(codigo.length/1024).toFixed(0)+'KB. Agora sobe esse arquivo pro seu GitHub substituindo o antigo.');
+}
+</script>
+</body>
+</html>
