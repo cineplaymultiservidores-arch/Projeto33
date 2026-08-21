@@ -1,5 +1,81 @@
 const CHAVE_PIX="38258022806";const FRETE=8;const ZAP="5514999999999";
-const produtos=[{id:1,cat:'lanches',nome:'X-Burguer',desc:'Pão, carne, queijo, salada',preco:18,foto:'https://i.postimg.cc/NGTcrvjS/IMG-20260821-WA5818.jpg'},{id:2,cat:'porcoes',nome:'Porção de Batata',desc:'400g + cheddar e bacon',preco:28,foto:'https://i.postimg.cc/NGTcrvjS/IMG-20260821-WA5818.jpg'},{id:3,cat:'bebidas',nome:'Coca Lata',desc:'350ml gelada',preco:6,foto:'https://i.postimg.cc/NGTcrvjS/IMG-20260821-WA5818.jpg'}];
+const produtos=[
+ // SMASH
+ {id:1,cat:'smash',nome:'Smash Burguês',desc:'Pão, maionese, hambúrguer e queijo.',preco:21,foto:'https://images.unsplash.com/photo-1568909344668-6f14a07b56a0?w=300'},
+ {id:2,cat:'smash',nome:'Smash Salada',desc:'Pão, maionese, hambúrguer, queijo, alface e tomate.',preco:24,foto:'https://images.unsplash.com/photo-1568909344668-6f14a07b56a0?w=300'},
+ {id:3,cat:'smash',nome:'Smash Bacon',desc:'Pão, maionese, 2 hambúrgueres, queijo, bacon, alface e tomate.',preco:30,foto:'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=300'},
+ {id:4,cat:'smash',nome:'Smash Egg',desc:'Pão, maionese, ovo, hambúrguer, queijo, alface e tomate.',preco:26,foto:'https://images.unsplash.com/photo-1568909344668-6f14a07b56a0?w=300'},
+ {id:5,cat:'smash',nome:'Smash Triplo',desc:'Pão, maionese, 3 hambúrgueres, queijo, bacon, alface e tomate.',preco:35,foto:'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=300'},
+ {id:6,cat:'smash',nome:'Tropical',desc:'Pão, maionese, 120g hambúrguer, queijo, bacon, abacaxi caramelizado, cebola roxa e rúcula.',preco:33,foto:'https://images.unsplash.com/photo-1568909344668-6f14a07b56a0?w=300'},
+ {id:7,cat:'smash',nome:'Chicken Bacon',desc:'Pão, maionese, frango KFC, queijo, bacon, alface e tomate.',preco:30,foto:'https://images.unsplash.com/photo-1606756790138-261d2b21cd75?w=300'},
+ {id:8,cat:'smash',nome:'Smash Tudo (Pão Francês)',desc:'Pão francês, maionese, 4 hambúrgueres, queijo prato, bacon, 3 ovos, calabresa, alface e tomate.',preco:55,foto:'https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?w=300'},
+ // PORÇÕES
+ {id:9,cat:'porcoes',nome:'Frango KFC P (350g)',desc:'Filé de frango crocante e molho especial.',preco:30,foto:'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=300'},
+ {id:10,cat:'porcoes',nome:'Frango KFC M (500g)',desc:'Filé de frango crocante e molho especial.',preco:50,foto:'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=300'},
+ {id:11,cat:'porcoes',nome:'Frango KFC G (1kg)',desc:'Filé de frango crocante e molho especial.',preco:80,foto:'https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=300'},
+ {id:12,cat:'porcoes',nome:'Tilápia',desc:'Filé de tilápia, pão na chapa, batata frita e molho tártaro.',preco:70,foto:'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=300'},
+ {id:13,cat:'porcoes',nome:'Anéis de Cebola 300g',desc:'Anéis de cebola fritos.',preco:25,foto:'https://images.unsplash.com/photo-1639024471283-03518883512d?w=300'},
+ {id:14,cat:'porcoes',nome:'Filé de Frango à Parmegiana',desc:'1kg filé frango, 300g batata frita, molho e queijo.',preco:80,foto:'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=300'},
+ {id:15,cat:'porcoes',nome:'Batata Frita 600g',desc:'Batata frita.',preco:40,foto:'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=300'},
+ {id:16,cat:'porcoes',nome:'Batata Cheddar e Bacon',desc:'Batata frita com cheddar e bacon.',preco:55,foto:'https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=300'},
+ {id:17,cat:'porcoes',nome:'Batata 4 Queijos e Molho',desc:'Batata frita, 4 queijos e bacon.',preco:56,foto:'https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=300'},
+ {id:18,cat:'porcoes',nome:'Tacos Mexicanos',desc:'Carne, frango, presunto e queijo. (2 unid)',preco:20,foto:'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=300'},
+ {id:19,cat:'porcoes',nome:'Contra Filé',desc:'500g contra filé, batata frita e torrada.',preco:110,foto:'https://images.unsplash.com/photo-1546964052-d2934a56c793?w=300'},
+ {id:20,cat:'porcoes',nome:'Parmegiana de Carne',desc:'Acompanha batata frita.',preco:110,foto:'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=300'},
+ {id:21,cat:'porcoes',nome:'Nachos',desc:'Doritos, carne moída ou frango desfiado.',preco:55,foto:'https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=300'},
+ // DOGS
+ {id:22,cat:'dogs',nome:'Dog Tradicional',desc:'Pão, maionese, ketchup, mostarda, 2 salsichas, purê, vinagrete e batata.',preco:17,foto:'https://images.unsplash.com/photo-1612392062796-d3d46f3f3c7d?w=300'},
+ {id:23,cat:'dogs',nome:'Dog Bacon',desc:'Pão, maionese, ketchup, mostarda, 2 salsichas, bacon, alface e batata palha.',preco:19,foto:'https://images.unsplash.com/photo-1612392062796-d3d46f3f3c7d?w=300'},
+ {id:24,cat:'dogs',nome:'Dog Vaca Louca',desc:'Pão, maionese, ketchup, mostarda, 2 salsichas, carne desfiada, queijo, catupiry, alface e batata palha.',preco:25,foto:'https://images.unsplash.com/photo-1612392062796-d3d46f3f3c7d?w=300'},
+ // COXINHA
+ {id:25,cat:'coxinha',nome:'Coxinha Carne c/ Ovo',desc:'Coxinha de carne com ovo.',preco:10,foto:'https://images.unsplash.com/photo-1604467707321-70c1b9d7ba7e?w=300'},
+ {id:26,cat:'coxinha',nome:'Coxinha Presunto e Queijo',desc:'Coxinha de presunto e queijo.',preco:12,foto:'https://images.unsplash.com/photo-1604467707321-70c1b9d7ba7e?w=300'},
+ {id:27,cat:'coxinha',nome:'Coxinha Frango c/ Catupiry',desc:'Coxinha de frango com catupiry.',preco:10,foto:'https://images.unsplash.com/photo-1604467707321-70c1b9d7ba7e?w=300'},
+ {id:28,cat:'coxinha',nome:'Coxinha Carne c/ Cream Cheese',desc:'Coxinha de carne com cream cheese.',preco:12,foto:'https://images.unsplash.com/photo-1604467707321-70c1b9d7ba7e?w=300'},
+ // RAP10
+ {id:29,cat:'rap10',nome:'Rap 10',desc:'Massa Rap10, hambúrguer artesanal, queijo prato, molho rosé apimentado, cebola roxa, tomate, alface e rúcula.',preco:20,foto:'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=300'},
+ // CAFÉ
+ {id:30,cat:'cafe',nome:'Pão na Chapa',desc:'Manteiga.',preco:6,foto:'https://images.unsplash.com/photo-1549931319-a545dcf3d696?w=300'},
+ {id:31,cat:'cafe',nome:'Misto Quente',desc:'Presunto e queijo.',preco:10,foto:'https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?w=300'},
+ {id:32,cat:'cafe',nome:'Omelete',desc:'Omelete.',preco:10,foto:'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=300'},
+ {id:33,cat:'cafe',nome:'Bauru',desc:'Presunto, queijo, tomate e orégano.',preco:12,foto:'https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?w=300'},
+ {id:34,cat:'cafe',nome:'Americano',desc:'Presunto, queijo e ovo.',preco:15,foto:'https://images.unsplash.com/photo-1568909344668-6f14a07b56a0?w=300'},
+ {id:35,cat:'cafe',nome:'Pão c/ Hambúrguer',desc:'Hambúrguer artesanal, queijo, alface e tomate.',preco:15,foto:'https://images.unsplash.com/photo-1568909344668-6f14a07b56a0?w=300'},
+ {id:36,cat:'cafe',nome:'Requeijão Tost',desc:'Pão, requeijão e queijo tostado.',preco:15,foto:'https://images.unsplash.com/photo-1549931319-a545dcf3d696?w=300'},
+ {id:37,cat:'cafe',nome:'Tapioca Frango',desc:'Frango desfiado, catupiry e milho.',preco:16,foto:'https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?w=300'},
+ {id:38,cat:'cafe',nome:'Tapioca Presunto e Queijo',desc:'Presunto, queijo, tomate e requeijão.',preco:18,foto:'https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?w=300'},
+ {id:39,cat:'cafe',nome:'Café Preto',desc:'Café preto.',preco:2,foto:'https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=300'},
+ {id:40,cat:'cafe',nome:'Café c/ Leite',desc:'Café com leite.',preco:5,foto:'https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=300'},
+ {id:41,cat:'cafe',nome:'Capuccino',desc:'Capuccino.',preco:12,foto:'https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=300'},
+ {id:42,cat:'cafe',nome:'Vitamina',desc:'Banana, mamão, morango e maçã.',preco:13,foto:'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=300'},
+ // BEBIDAS
+ {id:43,cat:'bebidas',nome:'Coca-Cola 600ml',desc:'Refrigerante Coca-Cola 600ml.',preco:10,foto:'https://images.unsplash.com/photo-1553456558-aff63285bdd1?w=300'},
+ {id:44,cat:'bebidas',nome:'Coca-Cola 1 Litro',desc:'Refrigerante Coca-Cola 1 litro.',preco:12,foto:'https://images.unsplash.com/photo-1553456558-aff63285bdd1?w=300'},
+ {id:45,cat:'bebidas',nome:'Coca-Cola 2 Litros',desc:'Refrigerante Coca-Cola 2 litros.',preco:15,foto:'https://images.unsplash.com/photo-1553456558-aff63285bdd1?w=300'},
+ {id:46,cat:'bebidas',nome:'Poty 600ml',desc:'Refrigerante Poty 600ml.',preco:7,foto:'https://images.unsplash.com/photo-1624559089284-a46d3d1d1b33?w=300'},
+ {id:47,cat:'bebidas',nome:'Poty 2 Litros',desc:'Refrigerante Poty 2 litros.',preco:12,foto:'https://images.unsplash.com/photo-1624559089284-a46d3d1d1b33?w=300'},
+ {id:48,cat:'bebidas',nome:'Roller 2 Litros',desc:'Refrigerante Roller 2 litros.',preco:12,foto:'https://images.unsplash.com/photo-1624559089284-a46d3d1d1b33?w=300'},
+ {id:49,cat:'bebidas',nome:'Refrigerante Lata',desc:'Refrigerante em lata.',preco:6,foto:'https://images.unsplash.com/photo-1553456558-aff63285bdd1?w=300'},
+ {id:50,cat:'bebidas',nome:'Suco Del Valle 600ml',desc:'Suco Del Valle 600ml.',preco:6,foto:'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=300'},
+ {id:51,cat:'bebidas',nome:'Suco Del Valle 1L',desc:'Suco Del Valle 1 litro.',preco:10,foto:'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=300'},
+ {id:52,cat:'bebidas',nome:'Suco Pomar 1L',desc:'Suco Pomar 1 litro.',preco:15,foto:'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=300'},
+ {id:53,cat:'bebidas',nome:'H2O',desc:'Bebida H2O.',preco:8,foto:'https://images.unsplash.com/photo-1544148103-0553bf10d98b?w=300'},
+ {id:54,cat:'bebidas',nome:'Água',desc:'Água.',preco:4,foto:'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=300'},
+ {id:55,cat:'bebidas',nome:'Antarctica 1L',desc:'Refrigerante Antarctica 1 litro.',preco:8.5,foto:'https://images.unsplash.com/photo-1624559089284-a46d3d1d1b33?w=300'},
+ {id:56,cat:'bebidas',nome:'Cerveja Barrigudinha',desc:'Cerveja Barrigudinha.',preco:5,foto:'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=300'},
+ {id:57,cat:'bebidas',nome:'Cerveja Lata',desc:'Cerveja em lata.',preco:6,foto:'https://images.unsplash.com/photo-1608270586620-248524c67de9?w=300'},
+ // ADICIONAIS
+ {id:58,cat:'adicionais',nome:'Adic. Bacon',desc:'Adicional de bacon.',preco:5,foto:'https://images.unsplash.com/photo-1583144584184-1df5a1f2cf38?w=300'},
+ {id:59,cat:'adicionais',nome:'Adic. Queijo',desc:'Adicional de queijo.',preco:5,foto:'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=300'},
+ {id:60,cat:'adicionais',nome:'Adic. Hambúrguer',desc:'Adicional de hambúrguer.',preco:6,foto:'https://images.unsplash.com/photo-1568909344668-6f14a07b56a0?w=300'},
+ {id:61,cat:'adicionais',nome:'Adic. Cheddar',desc:'Adicional de cheddar.',preco:4,foto:'https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=300'},
+ {id:62,cat:'adicionais',nome:'Adic. Calabresa',desc:'Adicional de calabresa.',preco:5,foto:'https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?w=300'},
+ {id:63,cat:'adicionais',nome:'Adic. Alface',desc:'Adicional de alface.',preco:2.5,foto:'https://images.unsplash.com/photo-1589923188651-268a9765e432?w=300'},
+ {id:64,cat:'adicionais',nome:'Adic. Tomate',desc:'Adicional de tomate.',preco:2.5,foto:'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=300'},
+ {id:65,cat:'adicionais',nome:'Adic. Salsicha',desc:'Adicional de salsicha.',preco:4,foto:'https://images.unsplash.com/photo-1612392062796-d3d46f3f3c7d?w=300'},
+ {id:66,cat:'adicionais',nome:'Adic. Ovo',desc:'Adicional de ovo.',preco:2,foto:'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=300'},
+ {id:67,cat:'adicionais',nome:'Adic. Catupiry',desc:'Adicional de catupiry.',preco:4,foto:'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=300'},
+];
 let carrinho=[];let etapa=1;let tipoEntrega='entrega';
 function estaAberto(){const d=new Date();const h=d.getHours()+d.getMinutes()/60;return(h>=9&&h<14.5)||(h>=19||h<0.5);}
 function render(f='todos'){const l=document.getElementById('lista-produtos');l.innerHTML='';produtos.filter(p=>f==='todos'||p.cat===f).forEach(p=>{l.innerHTML+=`<div class="produto"><img src="${p.foto}"><div class="prod-info"><h3>${p.nome}</h3><p>${p.desc}</p><div class="preco">R$ ${p.preco.toFixed(2).replace('.',',')}</div></div><button class="btn-add" onclick="add(${p.id})">+</button></div>`});}
@@ -14,17 +90,6 @@ function mostrarEtapa(){document.getElementById('etapa-1').style.display=etapa==
 function proximaEtapa(){if(etapa===1){if(document.getElementById('nome').value.length<3)return alert('Nome');if(document.getElementById('telefone').value.length<9)return alert('Whats');if(tipoEntrega==='retirada'){etapa=3;mostrarEtapa();mostrarPix();return;}}if(etapa===2){if(!document.getElementById('bairro').value)return alert('Bairro');if(!document.getElementById('rua').value)return alert('Rua');}if(etapa<3){etapa++;mostrarEtapa();mostrarPix();}else{enviarZap();}}
 function voltarEtapa(){if(etapa===3&&tipoEntrega==='retirada')etapa=1;else if(etapa>1)etapa--;mostrarEtapa();}
 function mostrarPix(){const p=document.getElementById('pagamento').value;const a=document.getElementById('area-pix');if(p==='Pix'){a.innerHTML=`<p style="color:#FFD700;font-size:11px;font-weight:900;">CHAVE PIX CPF:</p><div style="display:flex;gap:8px;margin-top:8px;"><input id="chave-pix" value="${CHAVE_PIX}" readonly style="margin:0;flex:1;"><button onclick="navigator.clipboard.writeText('${CHAVE_PIX}');alert('Copiado')" style="width:80px;background:#FFD700;color:#000;font-weight:900;border:none;border-radius:8px;">COPIAR</button></div>`;}else if(p==='Dinheiro'){a.innerHTML=`<input id="troco" placeholder="Troco pra quanto?">`;}else{a.innerHTML=`<select id="tipo-cartao"><option>Crédito</option><option>Débito</option></select>`;}}
-function enviarZap(){const n=document.getElementById('nome').value;let s=0;carrinho.forEach(p=>s+=p.preco*p.qtd);let fr=tipoEntrega==='entrega'?FRETE:0;let tot=s+fr;let txt=`*PEDIDO FABRICA*%0A`;carrinho.forEach(p=>{txt+=`${p.qtd}x ${p.nome}%0A`;});txt+=`%0ATotal R$ ${tot}%0ACliente ${n}%0ATipo ${tipoEntrega}%0APix ${CHAVE_PIX}`;window.open(`https://wa.me/${ZAP}?text=${txt}`,'_blank');}
-// AQUI TAVA O ERRO - ANTES TAVA COM FRETE JUNTO, AGORA SÓ ABERTO
-function statusLoja(){
-  const el=document.getElementById('status-loja');
-  if(!el)return;
-  if(estaAberto()){
-    el.innerText='● ABERTO AGORA';
-    el.style.background='#25D366';
-  }else{
-    el.innerText='● FECHADO';
-    el.style.background='#ff0044';
-  }
-}
+function enviarZap(){const n=document.getElementById('nome').value;let s=0;carrinho.forEach(p=>s+=p.preco*p.qtd);let fr=tipoEntrega==='entrega'?FRETE:0;let tot=s+fr;let txt=`*PEDIDO FABRICA DE SABORES*%0A`;carrinho.forEach(p=>{txt+=`${p.qtd}x ${p.nome} - R$ ${p.preco}%0A`;});txt+=`%0ASubtotal R$ ${s} + Frete R$ ${fr} = Total R$ ${tot}%0ACliente ${n}%0ATipo ${tipoEntrega}%0APix ${CHAVE_PIX}`;window.open(`https://wa.me/${ZAP}?text=${txt}`,'_blank');}
+function statusLoja(){const el=document.getElementById('status-loja');if(!el)return;if(estaAberto()){el.innerText='● ABERTO AGORA';el.style.background='#25D366';}else{el.innerText='● FECHADO';el.style.background='#ff0044';}}
 render();statusLoja();setInterval(statusLoja,60000);
