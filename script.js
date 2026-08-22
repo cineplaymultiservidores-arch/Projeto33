@@ -1,6 +1,6 @@
 const CHAVE_PIX="38258022806";
 const FRETE=8;
-const ZAP="5514999999999";
+const ZAP="5514991551070";
 
 const produtos=[
 
